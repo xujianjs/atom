@@ -1,0 +1,2 @@
+idea实用快捷键:
+Ctrl+Shift+Space:智能匹配类型.以list格式形式展示
