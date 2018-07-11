@@ -1,0 +1,53 @@
+<!Doctype html>
+<html>
+<a>link1</a>
+<a>link2</a>
+<a>link3</a>
+</html>
+
+<script>
+var foo=function (){console.info(111)}();//这里相当于是变量声明函数  产生表达式然后()调用执行  有效
+// function foo(){}()//函数声明 紧跟()是无效的
+function foo2(){console.info(222)}(1);//没有报错 但是代码块没有执行  相当于函数声明+没有半毛钱关系的(1)
+foo2(2);
+
+(function(){console.info('我是函数表达式')}());//()包裹函数  就会把匿名函数解析成表达式  可以追加()进行调用
+
+//当圆括号出现在匿名函数的末尾想要调用函数时，它会默认将函数当成是函数声明。
+
+// 当圆括号包裹函数时，它会默认将函数作为表达式去解析，而不是函数声明
+
+//************************************实践**********************************************
+(function(){console.info('号内的表达式代表函数立即调用表达式')}());//Crockford recommends this one，括号内的表达式代表函数立即调用表达式
+(function(){console.info('括号内的表达式代表函数表达式')})();//But this one works just as well，括号内的表达式代表函数表达式
+
+
+// 它的运行原理可能并不像你想的那样，因为`i`的值从来没有被锁定。
+// 相反的，每个链接，当被点击时（循环已经被很好的执行完毕），因此会弹出所有元素的总数，
+// 因为这是 `i` 此时的真实值。
+
+// var elems = document.getElementsByTagName('a');
+// for(var i = 0;i < elems.length; i++ ) {
+//     elems[i].addEventListener('click',function(e){
+//         e.preventDefault();
+//         alert('I am link #' + i)
+//         },false);
+// }
+
+// 而像下面这样改写，便可以了，因为在IIFE里，`i`值被锁定在了`lockedInIndex`里。
+// 在循环结束执行时，尽管`i`值的数值是所有元素的总和，但每一次函数表达式被调用时，
+// IIFE 里的 `lockedInIndex` 值都是`i`传给它的值,所以当链接被点击时，正确的值被弹出。
+
+var elems = document.getElementsByTagName('a');
+for(var i = 0;i < elems.length;i++) {
+    (function(lockedInIndex){
+      alert(i);
+        elems[i].addEventListener('click',function(e){
+            e.preventDefault();
+            alert('I am link #' + lockedInIndex);
+            },false)
+    })(i);
+}
+
+
+</script>

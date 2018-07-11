@@ -1,0 +1,46 @@
+<!Doctype html>
+<script>
+
+//测试作用域
+
+//js作用域是函数级别的  类c语言是语法块级别
+function test(){
+	var x=1;
+	if(x==1){
+		(function (){
+			x=2;
+		});
+	}
+alert(x);
+}
+test();
+
+//函数声明有两种  变量式  /  声明式
+
+function testfun(){
+
+	jj();
+foo();
+// 变量式
+var foo=function(){
+	alert(1);
+}
+
+// 声明式
+function jj(){
+	alert(2)
+}
+
+}
+
+// testfun();
+
+var baz = function spam() {};
+baz(); // vaild
+spam(); // ReferenceError "spam is not defined"
+
+//结论
+// 任何时候，请使用var声明变量, 并放置在作用域的顶端
+
+
+</script>
